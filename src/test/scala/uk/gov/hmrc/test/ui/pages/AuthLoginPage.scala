@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.pages.ChangeContactDetails.Ind.ChangeContactIndDetailsPage
+import uk.gov.hmrc.test.ui.pages.ChangeContactDetails.Org.ChangeContactOrgDetailsPage
 
 object AuthLoginPage extends BasePage {
   override val pageUrl: String             = TestConfiguration.url("auth-login-stub") + "/gg-sign-in"
@@ -112,9 +113,12 @@ object AuthLoginPage extends BasePage {
     AgentKickOutPage
   }
 
-  def loginAsIndividualForChange(carfID: String): ChangeContactIndDetailsPage.type = {
+  def loginAsIndividualOrOrganisationForChange(carfID: String): BasePage = {
     submitAuthForChange("Individual", "User")(addCarfId(carfID))
-    ChangeContactIndDetailsPage
+    carfID match {
+      case id if id.startsWith("W") => ChangeContactIndDetailsPage
+      case id if id.startsWith("Q") => ChangeContactOrgDetailsPage
+      case _                        => throw new IllegalArgumentException(s"Unexpected carfID prefix: $carfID")
+    }
   }
-
 }

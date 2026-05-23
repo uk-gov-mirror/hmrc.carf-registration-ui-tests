@@ -31,7 +31,7 @@ class IndividualChangeContactDetailsSpec extends BaseSpec {
     Scenario("1 - Individual user change contact details", RegistrationTests, ZapTests) {
 
       Given("the Individual user logs in as an individual not connected to a business")
-      AuthLoginPage.loginAsIndividualForChange("W234567890")
+      AuthLoginPage.loginAsIndividualOrOrganisationForChange("W234567890")
       And("the Individual user clicks on 'Change' link to change their email address on the 'Change your contact details' page")
       ChangeContactIndDetailsPage.clickOnLink(ChangeContactIndDetailsPage.emailChangeLink)
       And("the Individual user enters a different email in 'What is your email address?' page")
